@@ -12,9 +12,10 @@ class OggConverter {
     ffmpeg.setFfmpegPath(installer.path)
   }
 
-  toMp3(input, output) {
+  toMp3(input, filename) {
     try {
-      const outputPath = resolve(dirname(input), `${output}.mp3`)
+      const outputPath = resolve(dirname(input), `${filename}.mp3`)
+
       return new Promise((resolve, reject) => {
         ffmpeg(input)
           .inputOption('-t 30')
@@ -38,6 +39,7 @@ class OggConverter {
       })
       return new Promise((resolve) => {
         const stream = createWriteStream(oggPath)
+
         response.data.pipe(stream)
         stream.on('finish', () => resolve(oggPath))
       })
